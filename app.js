@@ -6,19 +6,58 @@ const port = process.env.PORT | 3000
 
 app.use('/', express.static('client'))
 
+const sockets = {
+    // socket_id: { where }
+}
+
+const lobby = {
+    socketToEntity: {
+        // socket_id: entity_id
+    },
+    entities: {
+        // entity_id: { ... }
+    }
+}
+
+const matchingQueue = []
+
+const game = {
+    socketToEntity: {
+        // socket_id: entity_id
+    },
+    entities: {
+        // entity_id: { ... }
+    }
+}
+
+const games = {
+    // game_id: game
+}
+
+// lobbyUpdate()
+
 io.on('connection', (socket) => {
+    const socket_id = socket.id
+
+    sockets[socket_id] = {
+        where: "lobby"
+    }
+
+    // const entity = lobby.createEntityBySocketId(socket_id)
+    const entity_id = lobby.getNewEntityId()
+    lobby.socketToEntity[socket_id] = entity_id
+    lobby.entities[entity_id] = {
+        // ...
+    }
+
+    lobby.sockets.emit('join', entity) // 그냥 엔티티를 던져주면 좋지 않나?
+
     /*
+    socket.on()
 
-    socket.broadcast.emit('join', socket.id)
-    joinPlayer(socket.id)
-
-    socket.emit('welcome', data)
     socket.on('disconnect', () => {
-        io.emit('userLeft', socket,id)
+        io.emit('leaveOut', socket.id)
     })
-
-    ...
-
     */
 })
 

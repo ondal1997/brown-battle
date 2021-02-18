@@ -1,1 +1,1 @@
-alert('gogo??')
+const socket = io()
