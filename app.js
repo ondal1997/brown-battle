@@ -34,8 +34,6 @@ const games = {
     // game_id: game
 }
 
-// lobbyUpdate()
-
 io.on('connection', (socket) => {
     const socket_id = socket.id
 
@@ -50,12 +48,11 @@ io.on('connection', (socket) => {
         // ...
     }
 
-    lobby.sockets.emit('join', entity) // 그냥 엔티티를 던져주면 좋지 않나?
+    lobby.socketToEntity.keys.emit('addEntity', entity)
 
     /*
-    socket.on()
-
     socket.on('disconnect', () => {
+        // disconnect process
         io.emit('leaveOut', socket.id)
     })
     */
