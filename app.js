@@ -56,8 +56,8 @@ io.on('connection', (socket) => {
     const entity = {
         type: 'brown',
         position: {
-            x: 100,
-            z: 100
+            x: Math.random() * 300 + 100,
+            z: Math.random() * 300 + 100
         },
         velocity: {
             x: 0,
@@ -94,6 +94,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('플레이어 로비 나감')
         delete socketWrappers[socketId]
+
         delete lobby.socketToEntity[socketId]
         delete lobby.entityToSocket[entityId]
 
