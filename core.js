@@ -22,6 +22,19 @@ const brownLogic = {
                         entity.moveCount = 0
                     }
                     break
+                case 'fire':
+                    entity.stateTick++
+
+                    if (entity.stateTick === 15) {
+                        entity.velocity.x -= entity.movePoint / 2 * Math.cos(entity.angle)
+                        entity.velocity.z -= entity.movePoint / 2 * Math.sin(entity.angle)
+                    }
+
+                    if (entity.stateTick === 80) {
+                        entity.state = 'idle'
+                        entity.stateTick = 0
+                    }
+                    break
             }
         }
     },
@@ -47,7 +60,29 @@ const brownLogic = {
                 entity.direction.z = 1
             }
         }
-    }
+    },
+    fire(entities, entity, angle) {
+        if (entity.state === 'idle' || entity.state === 'move') {
+            entity.state = 'fire'
+            entity.stateTick = 0
+            entity.moveCount = 0 // 
+            entity.angle = angle
+
+            if (Math.abs(angle) > Math.PI / 2) {
+                entity.direction.x = -1
+            }
+            else {
+                entity.direction.x = 1
+            }
+
+            if (angle < 0) {
+                entity.direction.z = -1
+            }
+            else {
+                entity.direction.z = 1
+            }
+        }
+    },
 }
 
 const translateLogic = {
@@ -86,6 +121,9 @@ const playerCommand = (entities, data) => {
     switch (commandType) {
         case 'move':
             brownLogic.move(entities[entityId], angle)
+            break
+        case 'fire':
+            brownLogic.fire(entities, entities[entityId], angle)
             break
     }
 }

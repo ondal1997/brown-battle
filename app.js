@@ -71,7 +71,8 @@ io.on('connection', (socket) => {
         state: 'idle',
         stateTick: 0,
         maxMoveCount: 2,
-        moveCount: 0
+        moveCount: 0,
+        angle: 0
     }
 
     const entityId = lobby.entityIdCount++

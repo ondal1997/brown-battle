@@ -3,6 +3,12 @@
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
 ctx.imageSmoothingEnabled = false
+let focusX = 0
+let focusZ = 0
+canvas.addEventListener('mousemove', (event) => {
+    focusX = event.offsetX / canvas.getBoundingClientRect().width * canvas.width
+    focusZ = event.offsetY / canvas.getBoundingClientRect().height * canvas.height
+})
 
 // --------
 // 이미지 로드
@@ -49,12 +55,20 @@ const connectNetwork = () => {
     // })
 
     canvas.addEventListener('click', (event) => {
-        const x = event.offsetX / canvas.getBoundingClientRect().width * canvas.width
-        const y = event.offsetY / canvas.getBoundingClientRect().height * canvas.height
+        const focusX = event.offsetX / canvas.getBoundingClientRect().width * canvas.width
+        const focusZ = event.offsetY / canvas.getBoundingClientRect().height * canvas.height
 
         const command = {
             commandType: 'move',
-            angle: Math.atan2(y - entities[entityId].position.z, x - entities[entityId].position.x)
+            angle: Math.atan2(focusZ - entities[entityId].position.z, focusX - entities[entityId].position.x)
+        }
+        socket.emit('playerCommand', command)
+    })
+
+    window.addEventListener('keydown', () => {
+        const command = {
+            commandType: 'fire',
+            angle: Math.atan2(focusZ - entities[entityId].position.z, focusX - entities[entityId].position.x)
         }
         socket.emit('playerCommand', command)
     })

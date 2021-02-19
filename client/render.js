@@ -6,21 +6,37 @@ const render = (entities) => {
     })
     for (const entity of entitiesSortedByZ) {
         let imageKey
-        if (entity.state === 'idle') {
-            if (entity.stateTick < 20) {
-                imageKey = '브라운_idle0'
-            }
-            else if (entity.stateTick < 40) {
-                imageKey = '브라운_idle1'
-            }
-        }
-        else if (entity.state === 'move') {
-            if (entity.stateTick < 15) {
-                imageKey = '브라운_move0'
-            }
-            else if (entity.stateTick < 80) {
-                imageKey = '브라운_move1'
-            }
+
+        switch (entity.state) {
+            case 'idle':
+                if (entity.stateTick < 20) {
+                    imageKey = '브라운_idle0'
+                }
+                else {
+                    imageKey = '브라운_idle1'
+                }
+                break
+
+            case 'move':
+                if (entity.stateTick < 15) {
+                    imageKey = '브라운_move0'
+                }
+                else {
+                    imageKey = '브라운_move1'
+                }
+                break
+
+            case 'fire':
+                if (entity.stateTick < 15) {
+                    imageKey = '브라운_pose'
+                }
+                else if (entity.stateTick < 20) {
+                    imageKey = '브라운_smash0'
+                }
+                else {
+                    imageKey = '브라운_smash1'
+                }
+                break
         }
 
         const image = images[imageKey]
