@@ -36,8 +36,8 @@ const brownLogic = {
                             }
 
                             if (Math.pow(other.position.x - entity.position.x, 2) + Math.pow(other.position.z - entity.position.z, 2) <= Math.pow(30, 2)) {
-                                other.velocity.x += 6 * Math.cos(entity.angle)
-                                other.velocity.z += 6 * Math.sin(entity.angle)
+                                other.velocity.x += 9 * Math.cos(entity.angle)
+                                other.velocity.z += 9 * Math.sin(entity.angle)
 
                                 entity.velocity.x -= 3 * Math.cos(entity.angle)
                                 entity.velocity.z -= 3 * Math.sin(entity.angle)
