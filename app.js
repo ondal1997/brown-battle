@@ -1,4 +1,4 @@
-const { brownLogic, translateLogic, playerEnter, playerExit, playerCommand } = require('./core.js')
+const { brownLogic, translateLogic, judgmentLogic, playerEnter, playerExit, playerCommand } = require('./core.js')
 
 const express = require('express')
 const app = express()
@@ -36,6 +36,7 @@ const lobby = {
             this.emit('updateWorld')
             brownLogic.update(this.entities)
             translateLogic.update(this.entities)
+            judgmentLogic.update(this.entities)
         }
         setTimeout(() => this.idleToUpdate())
     },

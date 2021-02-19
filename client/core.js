@@ -31,6 +31,10 @@ const brownLogic = {
                                 continue
                             }
 
+                            if (other.state === 'cry') {
+                                continue
+                            }
+
                             if (Math.pow(other.position.x - entity.position.x, 2) + Math.pow(other.position.z - entity.position.z, 2) <= Math.pow(30, 2)) {
                                 other.velocity.x += 6 * Math.cos(entity.angle)
                                 other.velocity.z += 6 * Math.sin(entity.angle)
@@ -47,6 +51,12 @@ const brownLogic = {
                         entity.state = 'idle'
                         entity.stateTick = 0
                         entity.hitFlag = false
+                    }
+                    break
+                case 'cry':
+                    entity.stateTick++
+                    if (entity.stateTick === 30) {
+                        entity.stateTick = 0
                     }
                     break
             }
@@ -110,6 +120,30 @@ const translateLogic = {
 
             entity.position.x += entity.velocity.x
             entity.position.z += entity.velocity.z
+        }
+    }
+}
+
+const judgmentLogic = {
+    centerX: 250,
+    centerZ: 250,
+    radius: 200,
+    update(entities) {
+        for (const entityId in entities) {
+            const entity = entities[entityId]
+
+            if (entity.type !== 'brown') {
+                continue
+            }
+
+            if (entity.state === 'cry') {
+                continue
+            }
+            
+            if (Math.pow(entity.position.x - this.centerX, 2) + Math.pow(entity.position.z - this.centerZ, 2) >= Math.pow(this.radius, 2)) {
+                entity.state = 'cry'
+                entity.stateTick = 0
+            }
         }
     }
 }

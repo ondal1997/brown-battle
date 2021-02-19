@@ -76,6 +76,7 @@ const connectNetwork = () => {
     socket.on('updateWorld', () => {
         brownLogic.update(entities)
         translateLogic.update(entities)
+        judgmentLogic.update(entities)
         render(entities)
     })
 

@@ -1,5 +1,13 @@
 const render = (entities) => {
+    if (entities[entityId].state === 'cry')
+    {
+        document.body.style.backgroundColor = 'Black'
+    }
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.beginPath()
+    ctx.arc(250, 250, 200, 0, 2 * Math.PI)
+    ctx.fillStyle = 'white'
+    ctx.fill()
     const entitiesSortedByZ = Object.values(entities)
     entitiesSortedByZ.sort((a, b) => {
         return a.position.z - b.position.z
@@ -35,6 +43,15 @@ const render = (entities) => {
                 }
                 else {
                     imageKey = '브라운_smash1'
+                }
+                break
+
+            case 'cry':
+                if (entity.stateTick < 15) {
+                    imageKey = '브라운_cry0'
+                }
+                else {
+                    imageKey = '브라운_cry1'
                 }
                 break
         }
