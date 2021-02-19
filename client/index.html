@@ -1,15 +1,43 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>브라운 배틀</title>
+    <style>
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+
+        canvas {
+            cursor: pointer;
+            background-color: white;
+            image-rendering: pixelated;
+        }
+    </style>
 </head>
+
 <body>
     <canvas width="500" height="500"></canvas>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/resources.js"></script>
     <script src="/index.js"></script>
 </body>
+
 </html>
