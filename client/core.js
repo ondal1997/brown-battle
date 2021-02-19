@@ -25,14 +25,28 @@ const brownLogic = {
                 case 'fire':
                     entity.stateTick++
 
-                    if (entity.stateTick === 15) {
-                        entity.velocity.x -= entity.movePoint / 2 * Math.cos(entity.angle)
-                        entity.velocity.z -= entity.movePoint / 2 * Math.sin(entity.angle)
+                    if (!entity.hitFlag && entity.stateTick >= 15 && entity.stateTick < 20) {
+                        for (const other of Object.values(entities)) {
+                            if (other === entity) {
+                                continue
+                            }
+
+                            if (Math.pow(other.position.x - entity.position.x, 2) + Math.pow(other.position.z - entity.position.z, 2) <= Math.pow(30, 2)) {
+                                other.velocity.x += 6 * Math.cos(entity.angle)
+                                other.velocity.z += 6 * Math.sin(entity.angle)
+
+                                entity.velocity.x -= 3 * Math.cos(entity.angle)
+                                entity.velocity.z -= 3 * Math.sin(entity.angle)
+                                entity.hitFlag = true
+                                break
+                            }
+                        }
                     }
 
                     if (entity.stateTick === 80) {
                         entity.state = 'idle'
                         entity.stateTick = 0
+                        entity.hitFlag = false
                     }
                     break
             }
@@ -65,7 +79,7 @@ const brownLogic = {
         if (entity.state === 'idle' || entity.state === 'move') {
             entity.state = 'fire'
             entity.stateTick = 0
-            entity.moveCount = 0 // 
+            entity.moveCount = 0 //
             entity.angle = angle
 
             if (Math.abs(angle) > Math.PI / 2) {
